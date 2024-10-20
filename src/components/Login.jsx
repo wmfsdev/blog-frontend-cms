@@ -22,7 +22,7 @@ const Login = () => {
     async function login(username, password) {
         try {
             console.log("login click attempt")
-            const response = await fetch(`http://localhost:4000/login-form`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/login-form`, {
                 method: "POST",
                 body: JSON.stringify({
                     username: username,
