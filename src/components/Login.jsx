@@ -51,7 +51,7 @@ const Login = () => {
                     // console.log(decoded)
                 localStorage.setItem(key, value)
                 console.log("success: login")
-                navigate("/")
+                navigate("/articles")
             } else {
                 // validation error handling
                 const errors = await response.json()
