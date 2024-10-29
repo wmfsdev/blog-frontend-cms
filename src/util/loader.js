@@ -15,3 +15,17 @@ export async function articlesLoader() {
         return err
     }
 }
+
+export async function articleLoader({ params }) {
+
+    const token = localStorage.getItem("token")
+    const headers = { 'Authorization': `Bearer ${token}` }
+
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/articles/${params.id}`, { headers }) 
+        const data = await response.json()
+        return data
+    } catch(err) {
+        return err
+    }
+}
