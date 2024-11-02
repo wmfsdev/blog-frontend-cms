@@ -67,7 +67,7 @@ const Articles = () => {
           </ul>
         </div>
         <div className="">
-            <h1>New Post</h1>
+            <Link to={'compose'}>New Article</Link>
         </div>
         </>
       )
