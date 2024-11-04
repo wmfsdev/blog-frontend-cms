@@ -1,10 +1,17 @@
 import { Link, useLoaderData, useNavigate } from 'react-router-dom'
 
+import DOMPurify from 'dompurify';
+
 const Articles = () => {
 
     const navigate = useNavigate()
     const articles = useLoaderData()
     const token = localStorage.getItem("token");
+
+    function strip(html){
+        let doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
+    }
 
     const handleSubmit = (e, method) => {
         const data = new FormData(e.target)
@@ -50,17 +57,17 @@ const Articles = () => {
                     <li key={article.id}>
                         <Link key={article.id} to={`${article.id}`}>
                         <div className='article-post'>
-                            <h2>{article.title}</h2>
-                            <p>{article.body}</p>
+                            <h2>{strip(article.title)}</h2>
+                            <p>{strip(article.body)}</p>
                         </div>
                         </Link>
                         <form method="POST" onSubmit={e => {e.preventDefault(); handleSubmit(e, "PUT")}}>
                             <input type="hidden" name="articleId" value={article.id} />
-                            <button name="button-test">update</button>
+                            <button name="button-test">PUBLISH STATUS</button>
                         </form>
                         <form method="POST" onSubmit={e => {e.preventDefault(); handleSubmit(e, "DELETE")}}>
                             <input type="hidden" name="articleId" value={article.id} />
-                            <button name="button-test">delete</button>
+                            <button name="button-test">DELETE</button>
                         </form>
                     </li>
                 )}
