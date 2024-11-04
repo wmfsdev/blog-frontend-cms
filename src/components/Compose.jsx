@@ -18,11 +18,11 @@ const Compose = () => {
 
 	async function submitArticle(title, body) {
 		try {
-			const response = await fetch(`${import.meta.env.VITE_API_URL}/test`, {
+			const response = await fetch(`${import.meta.env.VITE_API_URL}/articles`, {
 				method: 'POST',
 				body: JSON.stringify({
 					title: title,
-                    body: body
+                    body: body,
 				}),
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
@@ -38,56 +38,56 @@ const Compose = () => {
 		}
 	}
 	
-	const log = () => {
-		if (editorRef.current) {
-		  console.log(editorRef.current.getContent());
-		}
-	};
+	// const log = () => {
+	// 	if (editorRef.current) {
+	// 	  console.log(editorRef.current.getContent());
+	// 	}
+	// };
 
 	const filePickerCallback = (callback, value, meta) => {
 		if (meta.filetype === 'image') {
-		  const input = document.createElement('input');
-		  input.setAttribute('type', 'file');
-		  input.setAttribute('accept', 'image/*');
+			const input = document.createElement('input');
+			input.setAttribute('type', 'file');
+			input.setAttribute('accept', 'image/*');
+	
+			input.onchange = async function () {
+				const file = this.files[0];
    
-		  input.onchange = async function () {
-			const file = this.files[0];
-   
-			if (file) {
-			  const formData = new FormData();
-			  formData.append('file', file);
-			  formData.append('upload_preset', 'upload_test');
-			//   formData.append("api_key", "");
-			//   formData.append("timestamp", "");
-			//   formData.append("signature", "");
-			//   formData.append("eager", "c_pad,h_300,w_400|c_crop,h_200,w_260");
-				
-			  try {
-				const response = await fetch(
-				  `https://api.cloudinary.com/v1_1/${import.meta.env.CLOUD_NAME}/image/upload`,
-				  {
-					method: 'POST',
-					body: formData
-				  }
-				);
-   
-				if (!response.ok) {
-				  throw new Error('Network response was not ok');
+				if (file) {
+					const formData = new FormData();
+					formData.append('file', file);
+					formData.append('upload_preset', 'upload_test');
+					//   formData.append("api_key", "");
+					//   formData.append("timestamp", "");
+					//   formData.append("signature", "");
+					//   formData.append("eager", "c_pad,h_300,w_400|c_crop,h_200,w_260");
+					
+					try {
+						const response = await fetch(
+						`https://api.cloudinary.com/v1_1/${import.meta.env.CLOUD_NAME}/image/upload`,
+						{
+							method: 'POST',
+							body: formData
+						}
+						);
+		
+						if (!response.ok) {
+							throw new Error('Network response was not ok');
+						}
+		
+						const data = await response.json();
+						const imageUrl = data.secure_url;
+		
+						// Insert the uploaded image URL into TinyMCE
+						callback(imageUrl, { title: file.name });
+					} catch (error) {
+					console.error('Error uploading image to Cloudinary:', error);
+					}
 				}
-   
-				const data = await response.json();
-				const imageUrl = data.secure_url;
-   
-				// Insert the uploaded image URL into TinyMCE
-				callback(imageUrl, { title: file.name });
-			  } catch (error) {
-				console.error('Error uploading image to Cloudinary:', error);
-			  }
-			}
-		  };
-   
-		  input.click();
-	}}
+			};
+			input.click();
+		}
+	}
 
 	return (
 		<div className="article">
@@ -98,7 +98,7 @@ const Compose = () => {
 					id="1"
 					apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
 					onInit={(_evt, editor) => editorRef.current = editor}
-					initialValue="This is the initial content of the editor"
+					initialValue="Enter your title here"
 					init={{
 						height: 100,
 						menubar: false,
@@ -114,7 +114,7 @@ const Compose = () => {
 					id="2"
 					apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
 					onInit={(_evt, editor) => editorRef.current = editor}
-					initialValue="<p>This is the initial content of the editor.</p>"
+					initialValue="<p>Start typing...</p>"
 					init={{
 						height: 500,
 						menubar: false,
@@ -131,7 +131,7 @@ const Compose = () => {
 						file_picker_callback: filePickerCallback,
 					}}
 				/>
-			<button onClick={log}>Log editor content</button>
+			{/* <button onClick={log}>Log editor content</button> */}
 			<button type="submit">submit</button>
 			</form>
 		</div>
