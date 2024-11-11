@@ -4,12 +4,9 @@ const Navigation = () => {
 
     return (
       <>
-      <h1>CMS</h1>
       <div className="navigation">
-        {/* <Link to="/">Home</Link> */}
-        {/* <Link to="/">Login</Link> */}
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/dashboard/create">New Article</Link>
+        <Link to="/articles">DASHBOARD</Link>
+        <Link to="/logout">LOGOUT</Link>
       </div>
       <Outlet />
       </>
