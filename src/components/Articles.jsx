@@ -1,12 +1,11 @@
 import { Link, useLoaderData, useNavigate } from 'react-router-dom'
 
-import DOMPurify from 'dompurify';
-
 const Articles = () => {
 
     const navigate = useNavigate()
     const articles = useLoaderData()
     const token = localStorage.getItem("token");
+//  console.log(articles)
 
     function strip(html){
         let doc = new DOMParser().parseFromString(html, 'text/html');
@@ -16,18 +15,26 @@ const Articles = () => {
     const handleSubmit = (e, method) => {
         const data = new FormData(e.target)
         const articleId = data.get("articleId")
-        handleArticle(method, articleId)
+        const pubStatus = data.get("pubStatus") 
+        handleArticle(method, articleId, pubStatus)
     }
 
-    async function handleArticle(method, articleId) {
-        console.log("in article handler: ", method, articleId)
-        console.log(typeof method)
+    async function handleArticle(method, articleId, pubStatus) {
+        console.log("in article handler: ", method, articleId, pubStatus)
+
+        // turn into function??
+        if (pubStatus === "true") {
+            pubStatus = false
+        } else if (pubStatus === "false") {
+            pubStatus = true
+        } else pubStatus = undefined
+
         try {
-            console.log("try comment DELETE")
+            console.log("try article DELETE / UPDATE")
             const response = await fetch(`${import.meta.env.VITE_API_URL}/articles/${articleId}`, {
                 method: method,
                 body: JSON.stringify({
-                    article: articleId,
+                  publish: pubStatus // || undefined
                 }),
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8', 'Authorization': `Bearer ${token}`
@@ -36,8 +43,8 @@ const Articles = () => {
 
         if (response.status === 200) {
             const data = await response.json()
-            console.log(data)
-            navigate(`/article/${articleId}`)
+          //  console.log(data)
+         //   navigate(`/article/${articleId}`)
         }
 
         if (response.status === 401) {
@@ -63,11 +70,12 @@ const Articles = () => {
                         </Link>
                         <form method="POST" onSubmit={e => {e.preventDefault(); handleSubmit(e, "PUT")}}>
                             <input type="hidden" name="articleId" value={article.id} />
-                            <button name="button-test">PUBLISH STATUS</button>
+                            <input type="hidden" name="pubStatus" value={article.publish}/>
+                            <button name="publish">PUBLISH STATUS</button>
                         </form>
                         <form method="POST" onSubmit={e => {e.preventDefault(); handleSubmit(e, "DELETE")}}>
                             <input type="hidden" name="articleId" value={article.id} />
-                            <button name="button-test">DELETE</button>
+                            <button name="delete">DELETE</button>
                         </form>
                     </li>
                 )}
