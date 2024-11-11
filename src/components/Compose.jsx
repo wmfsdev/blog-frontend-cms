@@ -10,7 +10,6 @@ const Compose = () => {
 	function handleSubmit(e) {
 		e.preventDefault()
 		const data = new FormData(e.target)
-		console.log(data)
 		const body = data.get('content')
 		const title = data.get('title')
 		submitArticle(title, body)
@@ -25,24 +24,17 @@ const Compose = () => {
                     body: body,
 				}),
 				headers: {
-					'Content-type': 'application/json; charset=UTF-8',
+					'Content-type': 'application/json; charset=UTF-8', 'Authorization': `Bearer ${token}`
 				}
 			})
 
 			if (response.status === 200) {
 				const value = await response.json()
-				console.log(value)
 			}
 		} catch(err) {
 			console.log(err)
 		}
 	}
-	
-	// const log = () => {
-	// 	if (editorRef.current) {
-	// 	  console.log(editorRef.current.getContent());
-	// 	}
-	// };
 
 	const filePickerCallback = (callback, value, meta) => {
 		if (meta.filetype === 'image') {
@@ -60,11 +52,11 @@ const Compose = () => {
 					//   formData.append("api_key", "");
 					//   formData.append("timestamp", "");
 					//   formData.append("signature", "");
-					//   formData.append("eager", "c_pad,h_300,w_400|c_crop,h_200,w_260");
-					
+
+					console.log(import.meta.env.VITE_CLOUD_NAME)
 					try {
 						const response = await fetch(
-						`https://api.cloudinary.com/v1_1/${import.meta.env.CLOUD_NAME}/image/upload`,
+						`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`,
 						{
 							method: 'POST',
 							body: formData
@@ -116,14 +108,15 @@ const Compose = () => {
 					onInit={(_evt, editor) => editorRef.current = editor}
 					initialValue="<p>Start typing...</p>"
 					init={{
+						image_dimensions: false,
 						height: 500,
 						menubar: false,
 						plugins: [
-							'image code', 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+							'image', 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
 							'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
 							'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
 						],
-						toolbar: 'undo redo code | link image | blocks ' +
+						toolbar: 'undo redo | link image | blocks ' +
 							'bold italic forecolor | alignleft aligncenter ' +
 							'alignright alignjustify | bullist numlist outdent indent | ' +
 							'removeformat | help',
@@ -131,7 +124,6 @@ const Compose = () => {
 						file_picker_callback: filePickerCallback,
 					}}
 				/>
-			{/* <button onClick={log}>Log editor content</button> */}
 			<button type="submit">submit</button>
 			</form>
 		</div>
