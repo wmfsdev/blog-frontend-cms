@@ -1,11 +1,12 @@
+
 import { Link, useLoaderData, useNavigate } from 'react-router-dom'
+import PubButton from './PubButton';   
 
 const Articles = () => {
 
     const navigate = useNavigate()
     const articles = useLoaderData()
     const token = localStorage.getItem("token");
-//  console.log(articles)
 
     function strip(html){
         let doc = new DOMParser().parseFromString(html, 'text/html');
@@ -15,13 +16,12 @@ const Articles = () => {
     const handleSubmit = (e, method) => {
         const data = new FormData(e.target)
         const articleId = data.get("articleId")
-        const pubStatus = data.get("pubStatus") 
+        const pubStatus = data.get("pubStatus")
         handleArticle(method, articleId, pubStatus)
     }
 
     async function handleArticle(method, articleId, pubStatus) {
         console.log("in article handler: ", method, articleId, pubStatus)
-
         // turn into function??
         if (pubStatus === "true") {
             pubStatus = false
@@ -34,7 +34,7 @@ const Articles = () => {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/articles/${articleId}`, {
                 method: method,
                 body: JSON.stringify({
-                  publish: pubStatus // || undefined
+                  publish: pubStatus
                 }),
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8', 'Authorization': `Bearer ${token}`
@@ -43,8 +43,11 @@ const Articles = () => {
 
         if (response.status === 200) {
             const data = await response.json()
-          //  console.log(data)
-         //   navigate(`/article/${articleId}`)
+
+            // take the returned value (fx. true => false) and setState with it?
+            // maybe here to set pub status?
+            // navigate(`/article/${articleId}`) if I'm deleting or updating seems 
+            // unnecessary to redirect anywhere
         }
 
         if (response.status === 401) {
@@ -68,11 +71,10 @@ const Articles = () => {
                             <p>{strip(article.body)}</p>
                         </div>
                         </Link>
-                        <form method="POST" onSubmit={e => {e.preventDefault(); handleSubmit(e, "PUT")}}>
-                            <input type="hidden" name="articleId" value={article.id} />
-                            <input type="hidden" name="pubStatus" value={article.publish}/>
-                            <button name="publish">PUBLISH STATUS</button>
-                        </form>
+                        <PubButton
+                            handleSubmit={handleSubmit}
+                            article={article}
+                        />
                         <form method="POST" onSubmit={e => {e.preventDefault(); handleSubmit(e, "DELETE")}}>
                             <input type="hidden" name="articleId" value={article.id} />
                             <button name="delete">DELETE</button>
