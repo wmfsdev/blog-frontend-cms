@@ -10,7 +10,7 @@ const Articles = () => {
 
     function strip(html){
         let doc = new DOMParser().parseFromString(html, 'text/html');
-        return doc.body.textContent || "";
+        return doc.body.textContent.slice(0, 50) || "";
     }
 
     const handleSubmit = (e, method) => {
@@ -21,12 +21,10 @@ const Articles = () => {
     }
 
     async function handleArticle(method, articleId, pubStatus) {
-        console.log("in article handler: ", method, articleId, pubStatus)
-        // turn into function??
         if (pubStatus === "true") {
-            pubStatus = false
-        } else if (pubStatus === "false") {
             pubStatus = true
+        } else if (pubStatus === "false") {
+            pubStatus = false
         } else pubStatus = undefined
 
         try {
@@ -43,11 +41,7 @@ const Articles = () => {
 
         if (response.status === 200) {
             const data = await response.json()
-
-            // take the returned value (fx. true => false) and setState with it?
-            // maybe here to set pub status?
-            // navigate(`/article/${articleId}`) if I'm deleting or updating seems 
-            // unnecessary to redirect anywhere
+            navigate(`/articles`) 
         }
 
         if (response.status === 401) {
@@ -61,16 +55,20 @@ const Articles = () => {
           
       return (
         <>
+        <div className="new-post">
+            <Link to={'compose'}>COMPOSE NEW POST</Link>
+        </div>
         <div className='articles'>
             <ul>
                 { articles.map((article) => 
                     <li key={article.id}>
                         <Link key={article.id} to={`${article.id}`}>
                         <div className='article-post'>
-                            <h2>{strip(article.title)}</h2>
+                            <h2>{strip(article.title.toUpperCase())}</h2>
                             <p>{strip(article.body)}</p>
                         </div>
                         </Link>
+                        <div className='form-wrapper'>
                         <PubButton
                             handleSubmit={handleSubmit}
                             article={article}
@@ -79,13 +77,12 @@ const Articles = () => {
                             <input type="hidden" name="articleId" value={article.id} />
                             <button name="delete">DELETE</button>
                         </form>
+                        </div>
                     </li>
                 )}
           </ul>
         </div>
-        <div className="">
-            <Link to={'compose'}>New Article</Link>
-        </div>
+
         </>
       )
 }
