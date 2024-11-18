@@ -16,7 +16,81 @@ body {
   text-align: right;
   display: flex;
   gap: 1rem;
-  height: 100px;
+  height: 75px;
+  font-size: 1.5rem;
+  gap: 30px;
+}
+
+a {
+  text-decoration: none;
+  padding-top: 10px;
+}
+
+ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px;
+  border-style: solid;
+  border-radius: .5rem;
+  border-color: cadetblue;
+  padding-left: 20px;
+  padding-right: 20px;
+  gap: 10px;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-wrapper button {
+  width: 100px;
+}
+
+.article-post {
+  min-height: 100px;
+  text-align: left;
+}
+
+.new-post {
+  text-align: right;
+  margin-bottom: 20px;
+}
+.new-post a {
+  padding: 10px;
+  border: 2px;
+  border-style: solid;
+  border-radius: .3rem;
+  border-color: cadetblue;
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+img {
+  
+}
+
+.article h1 {
+  
+}
+
+.article button {
+  margin-top: 20px;
+  font-size: 1rem;
+  padding: 10px;
 }
 
 /* SIGNUP = SIGNIN */
@@ -40,4 +114,30 @@ body {
 
 .signup button, .login button {
   width: 100px;
+}
+
+
+.test {
+  color: rgb(0, 0, 0);
+  font-size: 1rem;
+  background: rgb(25, 152, 194);
+  border: 2px solid rgb(54, 54, 214);
+  border-radius: 5px;
+  animation: fadeOutAnimation ease 2.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+
+@keyframes fadeOutAnimation
+{
+   25%
+   { 
+   opacity: 1;
+   }
+
+   100% 
+   {
+   opacity: 0;
+   }
 }
