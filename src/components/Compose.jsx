@@ -1,10 +1,12 @@
 
 import { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react'
+import { useNavigate } from 'react-router-dom';
 
 const Compose = () => {
 
-	const editorRef = useRef(null)
+	const navigate = useNavigate();
+	const editorRef = useRef(null);
 	const token = localStorage.getItem("token");
 
 	function handleSubmit(e) {
@@ -29,7 +31,7 @@ const Compose = () => {
 			})
 
 			if (response.status === 200) {
-				const value = await response.json()
+				navigate("/articles")
 			}
 		} catch(err) {
 			console.log(err)
@@ -83,7 +85,7 @@ const Compose = () => {
 
 	return (
 		<div className="article">
-            <h1>New Article</h1>
+            <h1>COMPOSE NEW POST</h1>
 			<form action="" onSubmit={handleSubmit}>
 				<Editor
 					textareaName='title'
@@ -110,6 +112,7 @@ const Compose = () => {
 					init={{
 						image_dimensions: false,
 						height: 500,
+						width: 700,
 						menubar: false,
 						plugins: [
 							'image', 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
@@ -120,11 +123,11 @@ const Compose = () => {
 							'bold italic forecolor | alignleft aligncenter ' +
 							'alignright alignjustify | bullist numlist outdent indent | ' +
 							'removeformat | help',
-						content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+						content_style: 'html body { font-family:Helvetica,Arial,sans-serif; font-size:14px; overflow:hidden; }',
 						file_picker_callback: filePickerCallback,
 					}}
 				/>
-			<button type="submit">submit</button>
+			<button type="submit">SUBMIT</button>
 			</form>
 		</div>
 	)
