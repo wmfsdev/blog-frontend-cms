@@ -107,6 +107,7 @@ const Article = () => {
 					initialValue={article.title}
 					init={{
 						height: 100,
+						width: 900,
 						menubar: false,
 						statusbar: false,
 						contextmenu: false,
@@ -122,7 +123,8 @@ const Article = () => {
 					initialValue={article.body}
 					init={{
 					image_dimensions: false,
-					height: 500,
+					height: 700,
+					width: 900,
 					menubar: false,
 					plugins: [
 						'image', 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
@@ -133,7 +135,7 @@ const Article = () => {
 						'bold italic forecolor | alignleft aligncenter ' +
 						'alignright alignjustify | bullist numlist outdent indent | ' +
 						'removeformat | help',
-					content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+					content_style: 'body { overflow:hidden; font-family:Helvetica,Arial,sans-serif; font-size:14px; }' + 'img {max-width: 90%;}',
 					file_picker_callback: filePickerCallback,
 					}}
 				/>
