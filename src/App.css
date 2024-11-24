@@ -64,6 +64,7 @@ li {
 .new-post {
   text-align: right;
   margin-bottom: 20px;
+  max-width: 900px;
 }
 .new-post a {
   padding: 10px;
@@ -71,6 +72,10 @@ li {
   border-style: solid;
   border-radius: .3rem;
   border-color: cadetblue;
+}
+
+.articles {
+  max-width: 900px;
 }
 
 .article {
@@ -95,9 +100,14 @@ img {
 
 /* SIGNUP = SIGNIN */
 
+.login h1 {
+  text-align: left;
+}
+
 .signup, .login {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .signup form, .login form {
@@ -116,16 +126,24 @@ img {
   width: 100px;
 }
 
-
-.test {
-  color: rgb(0, 0, 0);
-  font-size: 1rem;
-  background: rgb(25, 152, 194);
-  border: 2px solid rgb(54, 54, 214);
-  border-radius: 5px;
+.save-prompt {
+  color: cadetblue;
+  font-size: 1.7rem;
+  margin-top: 10px;
+  background-color: #ddd7ce75;
+  margin: auto;
+  margin-top: 10px;
+  height: fit-content;
+  width: fit-content;
+  padding: 5px;
+  border-radius: 10px;
   animation: fadeOutAnimation ease 2.5s;
   animation-iteration-count: 1;
   animation-fill-mode: both;
+}
+
+.test {
+  border: 2px solid rgb(54, 54, 214);
 }
 
 
