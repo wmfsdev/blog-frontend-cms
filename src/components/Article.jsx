@@ -63,11 +63,8 @@ const Article = () => {
 					const formData = new FormData();
 					formData.append('file', file);
 					formData.append('upload_preset', 'upload_test');
-					//   formData.append("api_key", "");
-					//   formData.append("timestamp", "");
-					//   formData.append("signature", "");
 
-					console.log(import.meta.env.VITE_CLOUD_NAME)
+					// console.log(import.meta.env.VITE_CLOUD_NAME)
 					try {
 						const response = await fetch(
 						`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`,
@@ -131,16 +128,18 @@ const Article = () => {
 						'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
 						'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
 					],
-					toolbar: 'undo redo | link image | blocks | ' +
+					toolbar: 'undo redo | link image code | blocks | ' +
 						'bold italic forecolor | alignleft aligncenter ' +
 						'alignright alignjustify | bullist numlist outdent indent | ' +
 						'removeformat | help',
-					content_style: 'body { overflow:hidden; font-family:Helvetica,Arial,sans-serif; font-size:14px; }' + 'img {max-width: 90%;}',
+					newline_behavior: 'linebreak',
+					image_advtab: true,
+					content_style: 'body { overflow:hidden; font-family:Helvetica,Arial,sans-serif; font-size:14px; }' + 'img {max-width: 95%;}',
 					file_picker_callback: filePickerCallback,
 					}}
 				/>
 			<button type="submit">SAVE</button>
-			{ saveStatus ? <div className='test'>test fade</div> : null }
+			{ saveStatus ? <div className='save-prompt'>SAVED</div> : null }
 			
 			</form>
 		</div>
