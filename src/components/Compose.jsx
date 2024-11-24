@@ -95,6 +95,7 @@ const Compose = () => {
 					initialValue="Enter your title here"
 					init={{
 						height: 100,
+						width: 900,
 						menubar: false,
 						statusbar: false,
 						contextmenu: false,
@@ -112,17 +113,18 @@ const Compose = () => {
 					init={{
 						image_dimensions: false,
 						height: 500,
-						width: 700,
+						width: 900,
 						menubar: false,
 						plugins: [
 							'image', 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
 							'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
 							'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
 						],
-						toolbar: 'undo redo | link image | blocks ' +
+						toolbar: 'undo redo | link image code | blocks ' +
 							'bold italic forecolor | alignleft aligncenter ' +
 							'alignright alignjustify | bullist numlist outdent indent | ' +
 							'removeformat | help',
+						newline_behavior: 'linebreak',
 						content_style: 'html body { font-family:Helvetica,Arial,sans-serif; font-size:14px; overflow:hidden; }',
 						file_picker_callback: filePickerCallback,
 					}}
