@@ -134,7 +134,7 @@ const Article = () => {
 						'removeformat | help',
 					newline_behavior: 'linebreak',
 					image_advtab: true,
-					content_style: 'body { overflow:hidden; font-family:Helvetica,Arial,sans-serif; font-size:14px; }' + 'img {max-width: 95%;}',
+					content_style: 'body { overflow:hidden; font-family:Helvetica,Arial,sans-serif; font-size:14px; overflow-y:scroll; }' + 'img {max-width: 95%;}',
 					file_picker_callback: filePickerCallback,
 					}}
 				/>
