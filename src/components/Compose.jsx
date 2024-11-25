@@ -120,12 +120,12 @@ const Compose = () => {
 							'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
 							'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
 						],
-						toolbar: 'undo redo | link image code | blocks ' +
+						toolbar: 'undo redo | link image | blocks ' +
 							'bold italic forecolor | alignleft aligncenter ' +
 							'alignright alignjustify | bullist numlist outdent indent | ' +
 							'removeformat | help',
 						newline_behavior: 'linebreak',
-						content_style: 'html body { font-family:Helvetica,Arial,sans-serif; font-size:14px; overflow:hidden; }',
+						content_style: 'html body { font-family:Helvetica,Arial,sans-serif; font-size:14px; overflow:scroll; }',
 						file_picker_callback: filePickerCallback,
 					}}
 				/>
