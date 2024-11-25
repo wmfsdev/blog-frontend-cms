@@ -125,7 +125,7 @@ const Compose = () => {
 							'alignright alignjustify | bullist numlist outdent indent | ' +
 							'removeformat | help',
 						newline_behavior: 'linebreak',
-						content_style: 'html body { font-family:Helvetica,Arial,sans-serif; font-size:14px; overflow:scroll; }',
+						content_style: 'html body { font-family:Helvetica,Arial,sans-serif; font-size:14px; overflow-y:scroll; }',
 						file_picker_callback: filePickerCallback,
 					}}
 				/>
