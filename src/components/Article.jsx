@@ -91,7 +91,7 @@ const Article = () => {
 			input.click();
 		}
 	}
-
+	console.log(import.meta.env.VITE_TINYMCE_API_KEY)
 	return (
 		<div className="article">
 			<h2>Update Article</h2>
