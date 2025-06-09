@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import extractURL from '../util/helpers';
 
 const Compose = () => {
-console.log("COMPOSE")
 	const navigate = useNavigate();
 	const editorRef = useRef(null);
 	const token = localStorage.getItem("token");
@@ -26,7 +25,7 @@ console.log("COMPOSE")
 				method: 'POST',
 				body: JSON.stringify({
 					title: title,
-                    body: body,
+          body: body,
 					thumbnail: thumbnailURL
 				}),
 				headers: {
@@ -55,11 +54,7 @@ console.log("COMPOSE")
 					const formData = new FormData();
 					formData.append('file', file);
 					formData.append('upload_preset', 'upload_test');
-					//   formData.append("api_key", "");
-					//   formData.append("timestamp", "");
-					//   formData.append("signature", "");
 
-					console.log(import.meta.env.VITE_CLOUD_NAME)
 					try {
 						const response = await fetch(
 						`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`,
@@ -89,9 +84,9 @@ console.log("COMPOSE")
 
 	return (
 		<div className="article">
-            <h1>COMPOSE NEW POST</h1>
+      <h1>COMPOSE NEW POST</h1>
 			<form action="" onSubmit={handleSubmit}>
-				<div className="test">
+				<div className="title-container">
 					<Editor
 						textareaName='title'
 						id="1"
