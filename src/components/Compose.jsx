@@ -2,9 +2,10 @@
 import { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react'
 import { useNavigate } from 'react-router-dom';
+import extractURL from '../util/helpers';
 
 const Compose = () => {
-
+console.log("COMPOSE")
 	const navigate = useNavigate();
 	const editorRef = useRef(null);
 	const token = localStorage.getItem("token");
@@ -14,16 +15,19 @@ const Compose = () => {
 		const data = new FormData(e.target)
 		const body = data.get('content')
 		const title = data.get('title')
-		submitArticle(title, body)
+		const blogThumbnailData = data.get('blog-thumbnail')
+		const thumbnailURL = extractURL(blogThumbnailData)
+		submitArticle(title, body, thumbnailURL)
 	}
 
-	async function submitArticle(title, body) {
+	async function submitArticle(title, body, thumbnailURL) {
 		try {
 			const response = await fetch(`${import.meta.env.VITE_API_URL}/articles`, {
 				method: 'POST',
 				body: JSON.stringify({
 					title: title,
                     body: body,
+					thumbnail: thumbnailURL
 				}),
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8', 'Authorization': `Bearer ${token}`
@@ -87,23 +91,50 @@ const Compose = () => {
 		<div className="article">
             <h1>COMPOSE NEW POST</h1>
 			<form action="" onSubmit={handleSubmit}>
-				<Editor
-					textareaName='title'
-					id="1"
-					apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
-					onInit={(_evt, editor) => editorRef.current = editor}
-					initialValue="Enter your title here"
-					init={{
-						height: 100,
-						width: 900,
-						menubar: false,
-						statusbar: false,
-						contextmenu: false,
-						toolbar: false,
-						content_style: 'body { font-weight:800,font-family:Helvetica,Arial,sans-serif; font-size:16px }',
-						forced_root_block: 'h1'
-					}}
-				/>
+				<div className="test">
+					<Editor
+						textareaName='title'
+						id="1"
+						apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
+						onInit={(_evt, editor) => editorRef.current = editor}
+						initialValue="Enter your title here"
+						init={{
+							height: 150,
+							width: "70%",
+							menubar: false,
+							statusbar: false,
+							contextmenu: false,
+							toolbar: false,
+							content_style: 'body { font-weight:800,font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+							forced_root_block: 'h1'
+						}}
+					/>
+					<Editor
+						textareaName='blog-thumbnail'
+						apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
+						onInit={(_evt, editor) => editorRef.current = editor}
+						initialValue={""}
+						init={{
+							image_dimensions: false,
+							height: "150px",
+							width: "30%",
+							menubar: false,
+							statusbar: false,
+							contextmenu: false,
+							object_resizing: false,
+							resize_img_proportional: false,
+							highlight_on_focus: false,
+							plugins: [ 'image', 'visualblocks' ],
+							visualblocks_default_state: false,
+							toolbar: 'image',
+							newline_behavior: 'linebreak',
+							image_advtab: true,
+							forced_root_block: false,
+							content_style: 'body { overflow-y:hidden; font-family:Helvetica,Arial,sans-serif; font-size:14px;  margin: 0px; }' + 'body img { outline: white; max-height: 80px; max-width: 80px;}' + '.mce-content-body img[data-mce-selected] { outline: white; }',
+							file_picker_callback: filePickerCallback,
+						}}
+					/>
+				</div>
 				<Editor
 					textareaName='content'
 					id="2"
