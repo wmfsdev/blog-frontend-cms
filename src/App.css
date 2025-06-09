@@ -150,8 +150,8 @@ img {
   animation-fill-mode: both;
 }
 
-.test {
-  border: 2px solid rgb(54, 54, 214);
+.title-container {
+  display: flex;
 }
 
 
