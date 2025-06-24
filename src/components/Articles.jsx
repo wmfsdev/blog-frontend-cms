@@ -10,7 +10,7 @@ const Articles = () => {
 
     function strip(html){
         let doc = new DOMParser().parseFromString(html, 'text/html');
-        return doc.body.textContent.slice(0, 50) || "";
+        return doc.body.textContent.slice(0, 200) || "";
     }
 
     const handleSubmit = (e, method) => {
