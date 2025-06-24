@@ -51,6 +51,7 @@ const Article = () => {
 	}
 
 		const filePickerCallback = (callback, value, meta) => {
+
 		if (meta.filetype === 'image') {
 			const input = document.createElement('input');
 			input.setAttribute('type', 'file');
@@ -58,13 +59,11 @@ const Article = () => {
 	
 			input.onchange = async function () {
 				const file = this.files[0];
-   
+
 				if (file) {
 					const formData = new FormData();
 					formData.append('file', file);
 					formData.append('upload_preset', 'upload_test');
-
-					// console.log(import.meta.env.VITE_CLOUD_NAME)
 					try {
 						const response = await fetch(
 						`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`,
@@ -80,7 +79,6 @@ const Article = () => {
 		
 						const data = await response.json();
 						const imageUrl = data.secure_url;
-		
 						// Insert the uploaded image URL into TinyMCE
 						callback(imageUrl, { title: file.name });
 					} catch (error) {
@@ -96,23 +94,49 @@ const Article = () => {
 		<div className="article">
 			<h2>Update Article</h2>
 			<form action="" onSubmit={handleSubmit}>
-				<Editor
-					textareaName='title'
-					id="1"
-					apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
-					onInit={(_evt, editor) => editorRef.current = editor}
-					initialValue={article.title}
-					init={{
-						height: 100,
-						width: 900,
-						menubar: false,
-						statusbar: false,
-						contextmenu: false,
-						toolbar: false,
-						content_style: 'body { font-weight:800,font-family:Helvetica,Arial,sans-serif; font-size:16px }',
-						forced_root_block: 'h1'
-					}}
-				/>
+				<div className="title-container">
+					<Editor
+						textareaName='title'
+						id="1"
+						apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
+						onInit={(_evt, editor) => editorRef.current = editor}
+						initialValue={article.title}
+						init={{
+							height: 150,
+							width: "70%",
+							menubar: false,
+							statusbar: false,
+							contextmenu: false,
+							toolbar: false,
+							content_style: 'body { font-weight:800,font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+							forced_root_block: 'h1'
+						}}
+					/>
+					<Editor
+						textareaName='blog-thumbnail'
+						apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
+						onInit={(_evt, editor) => editorRef.current = editor}
+						initialValue={""}  // article.thumbnail
+						init={{
+							image_dimensions: false,
+							height: "150px",
+							width: "30%",
+							menubar: false,
+							statusbar: false,
+							contextmenu: false,
+							object_resizing: false,
+							resize_img_proportional: false,
+							highlight_on_focus: false,
+							plugins: [ 'image', 'visualblocks' ],
+							visualblocks_default_state: false,
+							toolbar: 'image',
+							newline_behavior: 'linebreak',
+							image_advtab: true,
+							content_style: 'body { overflow-y:hidden; font-family:Helvetica,Arial,sans-serif; font-size:14px;  margin: 0px; }' + 'body img { outline: white; max-height: 80px; max-width: 80px;}' + '.mce-content-body img[data-mce-selected] { outline: white; }',
+							file_picker_callback: filePickerCallback,
+						}}
+					/>
+				</div>
 				<Editor
 					textareaName='content'
 					apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
