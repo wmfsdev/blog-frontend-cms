@@ -150,7 +150,7 @@ const Compose = () => {
 							'bold italic forecolor | alignleft aligncenter ' +
 							'alignright alignjustify | bullist numlist outdent indent | ' +
 							'removeformat | help',
-						newline_behavior: 'linebreak',
+						newline_behavior: 'default',
 						content_style: 'html body { font-family:Helvetica,Arial,sans-serif; font-size:14px; overflow-y:scroll; }',
 						file_picker_callback: filePickerCallback,
 					}}
