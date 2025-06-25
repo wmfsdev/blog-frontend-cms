@@ -25,7 +25,7 @@ const Article = () => {
 		  setSaveStatus(false);
 		}, 3000);
 		return () => clearInterval(intervalId);
-	  }, [saveStatus]); 
+	}, [saveStatus]); 
 
 	async function submitArticle(title, body) {
 		try {
@@ -82,7 +82,7 @@ const Article = () => {
 						// Insert the uploaded image URL into TinyMCE
 						callback(imageUrl, { title: file.name });
 					} catch (error) {
-					console.error('Error uploading image to Cloudinary:', error);
+						console.error('Error uploading image to Cloudinary:', error);
 					}
 				}
 			};
@@ -156,7 +156,7 @@ const Article = () => {
 						'bold italic forecolor | alignleft aligncenter ' +
 						'alignright alignjustify | bullist numlist outdent indent | ' +
 						'removeformat | help',
-					newline_behavior: 'linebreak',
+					newline_behavior: 'default',
 					image_advtab: true,
 					content_style: 'body { overflow:hidden; font-family:Helvetica,Arial,sans-serif; font-size:14px; overflow-y:scroll; }' + 'img {max-width: 95%;}',
 					file_picker_callback: filePickerCallback,
