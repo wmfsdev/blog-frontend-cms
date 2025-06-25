@@ -158,7 +158,7 @@ const Compose = () => {
 			<button type="submit">SUBMIT</button>
 			</form>
 		</div>
-	)
+	) 
 }
 
 export default Compose
